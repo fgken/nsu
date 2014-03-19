@@ -42,6 +42,21 @@ void nsu_destroy(struct nsu_context **context)
 			(*context)->buf = NULL;
 		}
 
+		if((*context)->struct_protol2 != NULL){
+			free((*context)->struct_protol2);
+			(*context)->struct_protol2 = NULL;
+		}
+
+		if((*context)->struct_protol3 != NULL){
+			free((*context)->struct_protol3);
+			(*context)->struct_protol3 = NULL;
+		}
+
+		if((*context)->struct_protol4 != NULL){
+			free((*context)->struct_protol4);
+			(*context)->struct_protol4 = NULL;
+		}
+
 		free(*context);
 		*context = NULL;
 	}
@@ -70,4 +85,32 @@ int nsu_recv(struct nsu_context *context, void *buf, int size)
 {
 	printd("nus_recv\n");
 	return 0;
+}
+
+int nsu_set_protocol(struct nsu_context *context, int proto_id, void *struct_proto, int size)
+{
+	void **old_struct;
+	int  *old_proto_id;
+	void **new_struct;
+
+	printd("nsu_set_protocol\n");
+
+	if(context == NULL || struct_proto == NULL || size < 0){
+		return -1;
+	}
+
+	new_struct = malloc(size);
+	if(new_struct == NULL){
+		return -1;
+	}
+	memcpy(new_struct, struct_proto, size);
+
+	nsu_get_proto_struct(context, nsu_get_layer(proto_id), &old_proto_id, &old_struct);
+	if(*old_struct != NULL){
+		free(*old_struct);
+		*old_struct = NULL;
+	}
+
+	*old_proto_id = proto_id;
+	*old_struct = new_struct;
 }

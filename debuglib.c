@@ -28,3 +28,28 @@ void memdump(FILE *f, const char *buf, int size)
         fprintf(f, "\n");
     }
 }
+
+void dump_nsu(struct nsu_context *context)
+{
+	printf( "dump struct nus_context : 0x%x\n"
+			"  proto_l2=%d\n"
+			"  proto_l3=%d\n"
+			"  proto_l4=%d\n"
+			"  struct_protol2=0x%x\n"
+			"  struct_protol3=0x%x\n"
+			"  struct_protol4=0x%x\n"
+			"  buf=0x%x\n"
+			"  bufpos=%d\n"
+			"  ifname=%s\n"
+			,context
+			,context->proto_l2
+			,context->proto_l3
+			,context->proto_l4
+			,context->struct_protol2
+			,context->struct_protol3
+			,context->struct_protol4
+			,context->buf
+			,context->bufpos
+			,context->ifname
+		  );
+}
