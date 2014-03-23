@@ -47,7 +47,7 @@ struct nsu_ethernet {
 };
 
 // L3 Structures
-struct nsu_ip {
+struct nsu_ipv4 {
 	uint8_t  ver;		// Version [4bit]
 	uint8_t  ihl;		// IP Header Length [4bit]
 	uint8_t  tos;		// Type of Service

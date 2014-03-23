@@ -31,7 +31,7 @@ void memdump(FILE *f, const char *buf, int size)
 
 void dump_nsu(struct nsu_context *context)
 {
-	printf( "dump struct nus_context : 0x%x\n"
+	printf( "dump struct nsu_context : 0x%x\n"
 			"  proto_l2=%d\n"
 			"  proto_l3=%d\n"
 			"  proto_l4=%d\n"

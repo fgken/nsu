@@ -69,21 +69,51 @@ int nsu_send(struct nsu_context *context, void *buf, int size)
 	memdump(stdout, buf, size);
 	
 	if(context != NULL){
+		// push data
+		nsu_push_header(context, buf, size);
 
+		// push L4 header
 		switch(context->proto_l4){
 			case NSU_L4_UDP:
-				//return nsu_udp_send(context);
+				nsu_udp_push_header(context);
+				break;
 			case NSU_L4_TCP:
-				nsu_push_header(context, buf, size);
-				return nsu_tcp_send(context);
+				nsu_tcp_push_header(context);
+				break;
+			default:
+				break;
 		}
+
+		// push L3 header
+		switch(context->proto_l3){
+			case NSU_L3_IPV4:
+				nsu_ipv4_push_header(context);
+				break;
+			case NSU_L3_IPV6:
+				nsu_ipv6_push_header(context);
+				break;
+			default:
+				break;
+		}
+
+		// push L2 header
+		switch(context->proto_l2){
+			case NSU_L2_ETHERNET:
+				nsu_ethernet_push_header(context);
+				break;
+			default:
+				break;
+		}
+
+		// send packet through the nic(raw socket, tap etc.)
+		nsu_nic_send(context);
 	}
 	return 0;
 }
 
 int nsu_recv(struct nsu_context *context, void *buf, int size)
 {
-	printd("nus_recv\n");
+	printd("nsu_recv\n");
 	return 0;
 }
 
