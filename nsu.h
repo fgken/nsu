@@ -1,6 +1,8 @@
 #ifndef __NUS_H__
 #define __NUS_H__
 
+#include <stdint.h>
+
 // === etc ===
 #define NSU_BUFFER_SIZE			1600
 
@@ -39,20 +41,35 @@ struct nsu_context {
 
 // L2 Structures
 struct nsu_ethernet {
-	char dstmac[6];
-	char srcmac[6];
-	char type[2];
+	uint8_t  dstmac[6];
+	uint8_t  srcmac[6];
+	uint16_t type;
 };
 
 // L3 Structures
-struct nus_ip {
-	char dummy;
+struct nsu_ip {
+	uint8_t  ver;		// Version [4bit]
+	uint8_t  ihl;		// IP Header Length [4bit]
+	uint8_t  tos;		// Type of Service
+	uint16_t totallen;	// Totaol Length
+	uint16_t id;		// Identification
+	uint8_t  flag;		// Flags [3bit]
+	uint16_t fragment;	// Fragment Offset [13bit]
+	uint8_t  ttl;		// Time To Live
+	uint8_t  proto;		// Protocol
+	uint16_t checksum;	// Header Checksum
+	uint32_t srcip;
+	uint32_t dstip;
+	void     *options;
 };
 
 
 // L4 Structures
-struct nus_udp {
-	char dummy;
+struct nsu_udp {
+	uint16_t srcport;
+	uint16_t dstport;
+	uint16_t len;
+	uint16_t checksum;
 };
 
 struct nsu_tcp {
