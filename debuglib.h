@@ -5,7 +5,7 @@
 
 #ifdef __DEBUG__
 #define printd(fmt, ...) printf(fmt, ##__VA_ARGS__)
-void memdump(FILE *f, const char *buf, int size);
+void memdump(FILE *f, const unsigned char *buf, int size);
 
 #else
 #define printd(fmt, ...)

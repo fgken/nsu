@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
 	// --- set protocol ---
 	// ethernet
-	for(i=0; i<6; i++) eth.dstmac[i] = i, eth.srcmac[i] = i+0x0f;
+	for(i=0; i<6; i++) eth.dstmac[i] = i, eth.srcmac[i] = i+0xf0;
 	eth.type = 0x0800;
 	// ip
 	memset(&ip, 0x00, sizeof(ip));

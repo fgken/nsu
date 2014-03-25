@@ -3,7 +3,7 @@
 #include "debuglib.h"
 #include "nsu.h"
 
-void memdump(FILE *f, const char *buf, int size)
+void memdump(FILE *f, const unsigned char *buf, int size)
 {
     int len, i, j, c;
 
