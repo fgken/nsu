@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 
 	nsu_create(&context);
 
-	for(i=0; i<50; i++) buf[i] = i;
+	for(i=0; i<50; i++) buf[i] = 0xff - i;
 	size = 50;
 
 	// --- set protocol ---
@@ -33,8 +33,8 @@ int main(int argc, char *argv[])
 	for(i=0; i<4; i++) ip.dstip[i] = i+100, ip.srcip[i] = i+200;
 	// udp
 	memset(&udp, 0x00, sizeof(udp));
-	udp.srcport = 54502;
-	udp.dstport = 80;
+	udp.srcport = 0x5555;
+	udp.dstport = 0x2222;
 
 	nsu_set_protocol(context, NSU_L2_ETHERNET, &eth, sizeof(eth));
 	nsu_set_protocol(context, NSU_L3_IPV4, &ip, sizeof(ip));
