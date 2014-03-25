@@ -30,8 +30,7 @@ int main(int argc, char *argv[])
 	memset(&ip, 0x00, sizeof(ip));
 	ip.ver = 4;
 	ip.ihl = 5;
-	ip.dstip = 0x1234;
-	ip.srcip = 0x6789;
+	for(i=0; i<4; i++) ip.dstip[i] = i+100, ip.srcip[i] = i+200;
 	// udp
 	memset(&udp, 0x00, sizeof(udp));
 	udp.srcport = 54502;

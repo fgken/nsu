@@ -37,6 +37,7 @@ struct nsu_context {
 	char *buf;
 	int  bufpos;
 	char ifname[16];
+	int  endian;
 };
 
 // L2 Structures
@@ -58,8 +59,8 @@ struct nsu_ipv4 {
 	uint8_t  ttl;		// Time To Live
 	uint8_t  proto;		// Protocol
 	uint16_t checksum;	// Header Checksum
-	uint32_t srcip;
-	uint32_t dstip;
+	uint8_t  srcip[4];
+	uint8_t  dstip[4];
 	void     *options;
 };
 
