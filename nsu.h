@@ -47,6 +47,9 @@ struct nsu_ethernet {
 	uint16_t type;
 };
 
+#define NSU_ETHERNET_TYPE_IPV4		0x0800
+
+
 // L3 Structures
 struct nsu_ipv4 {
 	uint8_t  ver;		// Version [4bit]

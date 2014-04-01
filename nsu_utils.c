@@ -5,6 +5,9 @@
 #include "nsu.h"
 #include "debuglib.h"
 
+// **************************************************************************
+// --- Common ---
+// **************************************************************************
 int nsu_push_header(struct nsu_context *context, const void *data, int size)
 {
 	printd("push_header\n");
@@ -69,6 +72,54 @@ int nsu_get_proto_struct(struct nsu_context *context, int proto_layer, int **pro
 			*struct_proto = NULL;
 			return -1;		// fixme
 	}
+
+	return 0;
+}
+
+// **************************************************************************
+// --- Helper ---
+// **************************************************************************
+int nsu_init_ethernet_header(struct nsu_ethernet *header, const char *dstmacstr, const char *srcmacstr)
+{
+	int i;
+	char *endptr;
+	const char *p;
+	char dstmac[6];
+	char srcmac[6];
+
+	if(header == NULL || dstmacstr == NULL || srcmacstr == NULL){
+		return -1;
+	}
+
+	for(i=0, p=dstmacstr; i<6; i++){
+		dstmac[i] = strtol(p, &endptr, 16);
+		if(*endptr == ':'){
+			p = endptr+1;
+		}
+		else if(i == 5 && *endptr == '\0'){
+			memcpy(header->dstmac, dstmac, sizeof(header->dstmac));
+			break;
+		}
+		else{
+			return -1;
+		}
+	}
+
+	for(i=0, p=srcmacstr; i<6; i++){
+		srcmac[i] = strtol(p, &endptr, 16);
+		if(*endptr == ':'){
+			p = endptr+1;
+		}
+		else if(i == 5 && *endptr == '\0'){
+			memcpy(header->srcmac, srcmac, sizeof(header->srcmac));
+			break
+		}
+		else{
+			return -1;
+		}
+	}
+
+	header->type = NSU_ETHERNET_TYPE_IPV4;
 
 	return 0;
 }

@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "nsu.h"
+#include "nsu_utils.h"
 #include "debuglib.h"
 
 int main(int argc, char *argv[])
@@ -24,8 +25,8 @@ int main(int argc, char *argv[])
 
 	// --- set protocol ---
 	// ethernet
-	for(i=0; i<6; i++) eth.dstmac[i] = i, eth.srcmac[i] = i+0xf0;
-	eth.type = 0x0800;
+	nsu_init_ethernet_header(&eth, "52:54:00:12:34:56", "99:88:11:22:33:44");
+
 	// ip
 	memset(&ip, 0x00, sizeof(ip));
 	ip.ver = 4;
